@@ -14,6 +14,19 @@ router.get("/pending", async (req, res) => {
   }
 });
 
+router.get("/get/:id", async (req, res) => {
+  const { id } = req.params;
+  try {
+    const maintenanceById = await Maintenance.findOne({
+      _id: id,
+    });
+    res.json(maintenanceById);
+  } catch (error) {
+    console.error("Error fetching maintenance:", error);
+    res.status(500).json({ error: "Internal server error" });
+  }
+});
+
 router.put("/complete/:id", async (req, res) => {
   const { id } = req.params;
   console.log(id);
