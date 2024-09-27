@@ -5,6 +5,7 @@ const authRoutes = require("./routes/auth");
 const userRoutes = require("./routes/users");
 const maintenanceRoutes = require("./routes/maintenances");
 const notificationRoutes = require("./routes/notifications");
+const tasksRoutes = require("./routes/tasks");
 require("dotenv").config();
 
 const app = express();
@@ -17,6 +18,7 @@ app.use("/api/auth", authRoutes);
 app.use("/api/user", userRoutes);
 app.use("/api/maintenance", maintenanceRoutes);
 app.use("/api/notification", notificationRoutes);
+app.use("/api/tasks", tasksRoutes);
 
 // Connect to MongoDB
 mongoose
