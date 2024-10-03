@@ -6,7 +6,11 @@ const userRoutes = require("./routes/users");
 const maintenanceRoutes = require("./routes/maintenances");
 const notificationRoutes = require("./routes/notifications");
 const tasksRoutes = require("./routes/tasks");
+const machineRoutes = require("./routes/machines");
+const XLSX = require("xlsx");
 require("dotenv").config();
+
+const Machine = require("./models/Machine");
 
 const app = express();
 const PORT = process.env.PORT || 5000;
@@ -19,6 +23,7 @@ app.use("/api/user", userRoutes);
 app.use("/api/maintenance", maintenanceRoutes);
 app.use("/api/notification", notificationRoutes);
 app.use("/api/tasks", tasksRoutes);
+app.use("/api/machines", machineRoutes);
 
 // Connect to MongoDB
 mongoose
@@ -37,3 +42,17 @@ app.listen(PORT, () => {
   console.log(`Server running on port ${PORT}`);
 });
 // console.log(process.env.MONGO_URI);
+
+// const workbook = XLSX.readFile("./assets/machinedb.xlsx");
+// const sheetName = workbook.SheetNames[0];
+// const worksheet = workbook.Sheets[sheetName];
+// const data = XLSX.utils.sheet_to_json(worksheet);
+// data.forEach(async (row) => {
+//   try {
+//     const newMachine = new Machine(row);
+//     await newMachine.save();
+//     console.log("Row uploaded:", row);
+//   } catch (error) {
+//     console.error("Error uploading row:", row, error);
+//   }
+// });

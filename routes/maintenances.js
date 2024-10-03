@@ -57,8 +57,10 @@ router.post("/create", async (req, res) => {
       action,
       status,
     });
-    await newMaintenance.save();
-    res.status(201).json({ message: "Maintenance created successfully" });
+    const savedItem = await newMaintenance.save();
+    res
+      .status(201)
+      .json({ message: "Maintenance created successfully", id: savedItem._id });
   } catch (error) {
     res.status(500).json({ message: "Server error" });
   }

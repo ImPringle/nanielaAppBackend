@@ -3,12 +3,13 @@ const Notification = require("../models/Notification");
 const router = express.Router();
 
 router.post("/create", async (req, res) => {
-  const { title, message, status } = req.body;
+  const { title, message, status, eventId } = req.body;
   try {
     const newNoti = new Notification({
       title,
       message,
       status,
+      eventId,
     });
     await newNoti.save();
     res.status(201).json({ message: "Notification created successfully" });
@@ -23,6 +24,19 @@ router.get("/all", async (req, res) => {
     res.json(notifications);
   } catch (error) {
     console.error("Error fetching notifications:", error);
+    res.status(500).json({ error: "Internal server error" });
+  }
+});
+
+router.get("/get/:id", async (req, res) => {
+  const { id } = req.params;
+  try {
+    const notiById = await Notification.findOne({
+      _id: id,
+    });
+    res.json(notiById);
+  } catch (error) {
+    console.error("Error fetching noti:", error);
     res.status(500).json({ error: "Internal server error" });
   }
 });
