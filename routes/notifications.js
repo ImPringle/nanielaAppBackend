@@ -3,13 +3,16 @@ const Notification = require("../models/Notification");
 const router = express.Router();
 
 router.post("/create", async (req, res) => {
-  const { title, message, status, eventId } = req.body;
+  const { title, message, status, eventId, createdBy, createdById, solvedBy } = req.body;
   try {
     const newNoti = new Notification({
       title,
       message,
       status,
       eventId,
+      createdBy, 
+      createdById, 
+      solvedBy
     });
     await newNoti.save();
     res.status(201).json({ message: "Notification created successfully" });

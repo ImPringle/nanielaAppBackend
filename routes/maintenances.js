@@ -27,13 +27,14 @@ router.get("/get/:id", async (req, res) => {
   }
 });
 
-router.put("/complete/:id", async (req, res) => {
-  const { id } = req.params;
+router.put("/complete/:id/:by", async (req, res) => {
+  const { id, by } = req.params;
   console.log(id);
   try {
     const updatedItem = await Maintenance.findByIdAndUpdate(
       id,
       { status: "completed" }, // Set status to "complete"
+      { solvedBy: by},
       { new: true, runValidators: true }
     );
 
@@ -48,7 +49,8 @@ router.put("/complete/:id", async (req, res) => {
 });
 
 router.post("/create", async (req, res) => {
-  const { machine, machineNumber, type, action, status } = req.body;
+  const { machine, machineNumber, type, action, status, createdBy,
+    createdById, solvedBy } = req.body;
   try {
     const newMaintenance = new Maintenance({
       machine,
@@ -56,6 +58,9 @@ router.post("/create", async (req, res) => {
       type,
       action,
       status,
+      createdBy,
+      createdById,
+      solvedBy,
     });
     const savedItem = await newMaintenance.save();
     res

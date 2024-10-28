@@ -9,5 +9,8 @@ const userSchema = new mongoose.Schema({
     type: Date,
     default: Date.now,
   },
+  createdBy: { type: String, required: true },
+  createdById: { type: String, required: true },
+  solvedBy: { type: String, required: true },
 });
 module.exports = mongoose.model("Notification", userSchema);
